@@ -7,7 +7,7 @@
     "authors": [
         {
             "name": "PayPal",
-            "homepage": "https://gitlab.skuola.loc/skuola/paypal-merchant-sdk-php/contributors"
+            "homepage": "https://github.com/skuola/paypal-merchant-sdk-php/contributors"
         }
     ],
     "require": {
