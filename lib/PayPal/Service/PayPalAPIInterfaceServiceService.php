@@ -1207,6 +1207,13 @@ class PayPalAPIInterfaceServiceService
         $ret  = new CreateRecurringPaymentsProfileResponseType();
         $resp = $this->call('PayPalAPIAA', 'CreateRecurringPaymentsProfile', $createRecurringPaymentsProfileReq,
             $apiContext, $handlers);
+        /**
+         * Dal giorno 28/07/2024 sono iniziati dei problemi con la creazione dei pagamenti ricorrenti su PayPal.
+         * La risposta xml di PayPal presenta un suffisso aggiuntivo `ns4:` nei tag xml; questo problema si presenta
+         * solo per le risposte ad alcune API (come ad esempio qui nel `CreateRecurringPaymentsProfile`), non per tutte.
+         * Il fix consiste nell'aggiunta di una preg_replace per eliminare il prefisso `ns4:` nella risposta xml.
+         */
+        $resp = preg_replace('/<(\/)?ns4:(.*?)>/', '<$1$2>', $resp);
         $ret->init(PPUtils::xmlToArray($resp));
         return $ret;
     }
